@@ -368,6 +368,27 @@ static void LoadConfig(void) {
     if (cfg.iconSize > 256) cfg.iconSize = 256;
     if (cfg.edge < 0 || cfg.edge > 3) cfg.edge = 0;
     if (cfg.mode < 0 || cfg.mode > 2) cfg.mode = 0;
+    /* a hand-edited, migrated or partially written ini can hold any value, and the
+       drawing code trusts these fields: clamp everything that indexes an option
+       array or feeds a geometry / alpha computation */
+    if (cfg.opacity > 100) cfg.opacity = 100;
+    if (cfg.zoomSize < 16) cfg.zoomSize = 16;
+    if (cfg.zoomSize > 256) cfg.zoomSize = 256;
+    if (cfg.spacing < 0) cfg.spacing = 0;
+    if (cfg.spacing > 64) cfg.spacing = 64;
+    if (cfg.margin < 0) cfg.margin = 0;
+    if (cfg.pad < 0) cfg.pad = 0;
+    if (cfg.radius < 0) cfg.radius = 0;
+    if (cfg.blur < 1) cfg.blur = 1;
+    if (cfg.blur > 32) cfg.blur = 32;
+    if (cfg.theme < 0 || cfg.theme > 2) cfg.theme = 0;
+    if (cfg.uiTheme < 0 || cfg.uiTheme > 2) cfg.uiTheme = 2;
+    if (cfg.dotStyle < 0 || cfg.dotStyle > 1) cfg.dotStyle = 0;
+    if (cfg.plateDark < 0 || cfg.plateDark > 4) cfg.plateDark = 0;
+    if (cfg.plateLight < 0 || cfg.plateLight > 4) cfg.plateLight = 0;
+    if (cfg.plateRadius < 0) cfg.plateRadius = 0;
+    if (cfg.plateRadius > 50) cfg.plateRadius = 50;
+    if (cfg.monitor < 0) cfg.monitor = 0;
     UpdateTheme();
 }
 
@@ -3986,7 +4007,8 @@ static void PaintSettings(HDC dc, int W, int H) {
         }
         case R_COMBO: {
             DrawTextBox(g, r->label, g_font, xl, r->y, g_cw * 0.45f, r->h, cText, TRUE);
-            int cur = *r->v < r->nopts ? *r->v : 0;
+            int cur = *r->v;
+            if (cur < 0 || cur >= r->nopts) cur = 0;   /* config file may hold any value */
             FillRR(g, g_uiDark ? ARGBC(255, 55, 57, 66) : ARGBC(255, 238, 240, 246), a.X, a.Y, a.Width, a.Height, 9);
             DrawTextBox(g, r->opts[cur], g_font, a.X + 12, a.Y, a.Width - 36, a.Height, cText, TRUE);
             DrawChevronDown(g, a.X + a.Width - 16, a.Y + a.Height / 2, cSub);
@@ -4168,7 +4190,13 @@ static void DoAct(HWND h, int act) {
         for (int i = 0; i < nItems; i++) {
             if (items[i].type == T_SEP || items[i].temp) continue;
             if (g_mstate[i] == 1 && ApplyIconFile(i, g_match[i])) { g_mstate[i] = 3; ok++; }
-            else if (g_mstate[i] == 2) { miss++; if (miss <= 8) { lstrcatW(list, L"\n · "); lstrcatW(list, items[i].name); } }
+            else if (g_mstate[i] == 2) {
+                miss++;   /* bounded: up to 8 names x 128 chars would overflow list[600] */
+                if (miss <= 8 && lstrlenW(list) + 4 + lstrlenW(items[i].name) < 600) {
+                    lstrcatW(list, L"\n · ");
+                    lstrcatW(list, items[i].name);
+                }
+            }
         }
         ScheduleSave();
         Kick();

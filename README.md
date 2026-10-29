@@ -8,17 +8,9 @@
 
 纯 Win32 + GDI+ 实现 · 单文件 C 源码 · 免安装 · 便携
 
-![Windows](https://img.shields.io/badge/platform-Windows%2010%2F11-blue?logo=windows)
-
-![Language](https://img.shields.io/badge/language-C-blue)
-
-![x64](https://img.shields.io/badge/arch-x64-green)
-
-![Size](https://img.shields.io/badge/size-%7E230%20KB-lightgrey)
+![Windows](https://img.shields.io/badge/platform-Windows%2010%2F11-blue?logo=windows) ![Language](https://img.shields.io/badge/language-C-blue) ![x64](https://img.shields.io/badge/arch-x64-green) ![Size](https://img.shields.io/badge/size-%7E230%20KB-lightgrey)
 
 </div>
-
----
 
 ## ✨ 简介
 
@@ -28,7 +20,6 @@ MiniDock 是一个参考 macOS Dock 风格的 Windows 桌面 Dock 栏。它使�
 
 > 整个程序由单个 `minidock.c` 文件构成，配置保存在 `MiniDock.ini` 中，exe 旁边放一个 `MiniDock.portable` 文件即可切换为便携模式。
 
----
 
 ## 🚀 功能特性
 
@@ -54,12 +45,6 @@ MiniDock 是一个参考 macOS Dock 风格的 Windows 桌面 Dock 栏。它使�
 - 所有高耗能功能（磨砂玻璃、窗口扫描、预览等）均可单独关闭
 - 设置中明确标注每个开关的**性能影响等级**
 
----
-
-## 📸 截图
-
----
-
 ## 📥 下载与安装
 
 ### 直接使用
@@ -84,8 +69,6 @@ gcc -Os -mwindows -s -static-libgcc -o MiniDock.exe minidock.c app_res.o \
 
 Windows 下也可以直接运行仓库中的 `build.bat`。
 
----
-
 ## 🎯 快速上手
 
 | 操作       | 说明                            |
@@ -98,8 +81,6 @@ Windows 下也可以直接运行仓库中的 `build.bat`。
 | 最小化 / 恢复 | 点击 Dock 中已运行的应用图标             |
 | 设置       | 右键 Dock → Dock 设置（或双击托盘图标）    |
 | 显示 / 隐藏  | `Ctrl + Alt + D`              |
-
----
 
 ## ⚙️ 配置说明
 
@@ -116,8 +97,6 @@ Windows 下也可以直接运行仓库中的 `build.bat`。
 | 性能与资源 | 各高耗能开关（含性能影响标注）、一键低占用模式                           |
 
 **导入 / 导出**：支持导出 / 导入完整配置、仅设置、仅应用与图标，以及每个选项卡的独立配置（`.mdock` 格式）。
-
----
 
 ## 📝 更新日志
 
@@ -148,8 +127,6 @@ Windows 下也可以直接运行仓库中的 `build.bat`。
 - 设置搜索框、常用图标一键添加、性能影响小字标注
 - 每个选项卡独立导入 / 导出 + 总配置导入 / 导出
 
----
-
 ## 📂 目录结构
 
 ```
@@ -165,16 +142,12 @@ MiniDock/
         └── app.manifest       # DPI 感知 / 视觉样式清单
 ```
 
----
-
 ## 🛠 技术栈
 
 - **语言**：C（C99）
 - **GUI**：Win32 API + GDI+ Flat API（手动声明，无需 `gdiplus.h`）
 - **依赖**：仅系统 DLL（`gdiplus`、`shell32`、`dwmapi` 等），静态链接 libgcc
 - **体积**：约 230 KB 的单文件 exe
-
----
 
 ## 🤝 贡献
 
@@ -184,13 +157,9 @@ MiniDock/
 2. 保持单文件 `minidock.c` 的简洁风格
 3. 新增功能优先保证**无 bug、可关闭、不增加空闲资源占用**
 
----
-
 ## 📄 许可证
 
 本项目源码版权归原作者（Wangcy）所有。如需转载、分发或二次开发，请先联系作者确认许可。
-
----
 
 ## 🙏 致谢
 

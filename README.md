@@ -1,5 +1,7 @@
 <div align="center">
 
+![](https://github.com/wang01116/MiniDock/blob/main/assets/logo-128.png?raw=true)
+
 # MiniDock
 
 **一个极致轻量、追求低资源占用的 Windows 11 风格 Dock 栏**
